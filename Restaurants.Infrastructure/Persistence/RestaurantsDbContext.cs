@@ -10,8 +10,11 @@ namespace Restaurants.Infrastructure.Persistence
 {
     internal class RestaurantsDbContext : DbContext
     {
+        public RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> options) : base(options) { }
+
         internal DbSet<Restaurant> Restaurants { get; set; }
         internal DbSet<Dish> Dishes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -23,13 +26,6 @@ namespace Restaurants.Infrastructure.Persistence
                 .HasMany(r => r.Dishes)
                 .WithOne()
                 .HasForeignKey(d => d.RestaurantId);
-
-
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=restaurants_db;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True;");
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Restaurants.Application.Restaurants
 {
-    internal interface IRestaurantsService
+    public interface IRestaurantsService
     {
         Task<IEnumerable<Restaurant>> GetAllRestaurants();
     }

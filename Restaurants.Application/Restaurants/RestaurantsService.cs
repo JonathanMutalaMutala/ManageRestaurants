@@ -4,7 +4,7 @@ using Restaurants.Domain.Repositories;
 
 namespace Restaurants.Application.Restaurants
 {
-    internal class RestaurantsService(IRestaurantsRepository restaurantsRepository, ILogger<RestaurantsService> logger) : IRestaurantsService
+    public class RestaurantsService(IRestaurantsRepository restaurantsRepository, ILogger<RestaurantsService> logger) : IRestaurantsService
     {
         public async Task<IEnumerable<Restaurant>> GetAllRestaurants()
         {

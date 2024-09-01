@@ -13,3 +13,18 @@ GET {{Restaurants.API_HostAddress}}/api/restaurants
 GET {{Restaurants.API_HostAddress}}/api/restaurants/1
 
 ###
+
+POST {{Restaurants.API_HostAddress}}/api/restaurants
+
+{
+  "Name": "Spicy Delights",
+  "Description": "A culinary experience like no other",
+  "Category": "Fine Dining",
+  "HasDelivery": true,
+  "ContactEmail": "info@gourmetdelights.com",
+  "ContactNumber": "555-1234-3333",
+  "City": "Montreal",
+  "Street": "123 Main Street",
+  "PostalCode": "H1X 1T4"
+
+}

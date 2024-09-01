@@ -8,6 +8,20 @@ namespace Restaurants.Application.Restaurants
 {
     public class RestaurantsService(IRestaurantsRepository restaurantsRepository, ILogger<RestaurantsService> logger, IMapper mapper) : IRestaurantsService
     {
+        public async Task<int> Create(CreateRestaurantDto createRestaurantDto)
+        {
+            logger.LogInformation("Creating new restaurant"); 
+            var restaurant = mapper.Map<Restaurant>(createRestaurantDto);
+
+            if (restaurant == null)
+                throw new Exception("error");
+
+            restaurant.IsActive = true; // IsActive permet de determiner si un restaurant existe vraiment.
+            int id = await restaurantsRepository.CreateAsync(restaurant);
+
+            return id;
+        }
+
         public async Task<IEnumerable<RestaurantDto>> GetAllRestaurants()
         {
             logger.LogInformation("Getting all restaurants");

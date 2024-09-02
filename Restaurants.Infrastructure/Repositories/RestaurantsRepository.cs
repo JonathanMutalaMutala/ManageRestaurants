@@ -22,6 +22,13 @@ namespace Restaurants.Infrastructure.Repositories
             return restaurant.Id;
         }
 
+        public async Task Delete(Restaurant entity)
+        {
+            entity.IsActive = false;
+            _dbContext.Restaurants.Update(entity); 
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<Restaurant>> GetAllAsync()
         {
             var restaurants = await _dbContext.Restaurants

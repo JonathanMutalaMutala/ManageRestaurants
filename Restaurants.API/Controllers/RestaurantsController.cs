@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Restaurants.Command.CreateRestaurant;
 using Restaurants.Application.Restaurants.Command.DeleteRestaurant;
+using Restaurants.Application.Restaurants.Command.UpdateRestaurant;
 using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Application.Restaurants.Queries.GetRestaurantById;
 
@@ -53,5 +54,15 @@ namespace Restaurants.API.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id }, null);
         }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateRestaurant([FromRoute] int id, UpdateRestaurantCommand command)
+        {
+            command.Id = id;
+            await mediator.Send(command);
+
+            return NoContent(); 
+        }
+
     }
 }

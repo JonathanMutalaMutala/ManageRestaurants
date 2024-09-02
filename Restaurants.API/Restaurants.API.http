@@ -32,3 +32,15 @@ Content-Type: application/json
   "PostalCode": "H1X 1T4"
 
 }
+
+###
+PATCH {{Restaurants.API_HostAddress}}/api/restaurants/1002
+Content-Type: application/json
+
+{
+  "Name": "Updated name",
+  "Description": "This is a sample restaurant description.",
+  "HasDelivery": false
+}
+
+###

@@ -23,7 +23,7 @@ namespace Restaurants.Application.Restaurants.Queries.GetRestaurantById
         public async Task<RestaurantDto?> Handle(GetRestaurantByIdQuery request, CancellationToken cancellationToken)
         {
             logger.LogInformation("Getting single restaurant");
-            var restaurant = await restaurantsRepository.GetByIdAsync(id);
+            var restaurant = await restaurantsRepository.GetByIdAsync(request.Id);
 
             var restaurantDto = mapper.Map<RestaurantDto>(restaurant);
 

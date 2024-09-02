@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Restaurants;
+using Restaurants.Application.Restaurants.Command.CreateRestaurant;
 using Restaurants.Application.Restaurants.Dtos;
+using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
+using Restaurants.Application.Restaurants.Queries.GetRestaurantById;
 
 namespace Restaurants.API.Controllers
 {
@@ -8,23 +12,23 @@ namespace Restaurants.API.Controllers
     [Route("api/restaurants")]
     public class RestaurantsController : ControllerBase
     {
-        private readonly IRestaurantsService _restaurantsService;
+        private readonly IMediator mediator;
 
-        public RestaurantsController(IRestaurantsService restaurantsService)
+        public RestaurantsController(IMediator mediator)
         {
-            this._restaurantsService = restaurantsService;
+            this.mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _restaurantsService.GetAllRestaurants());
+            return Ok(await mediator.Send(new GetAllRestaurantsQuery()));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var restaurant = await _restaurantsService.GetRestaurantById(id);
+            var restaurant = await mediator.Send(new GetRestaurantByIdQuery(id)); 
 
             if (restaurant == null)
                 return NotFound();
@@ -32,9 +36,9 @@ namespace Restaurants.API.Controllers
             return Ok(restaurant);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantDto createRestaurantDto)
+        public async Task<IActionResult> CreateRestaurant(CreateRestaurantCommand  command)
         {
-            int id = await _restaurantsService.Create(createRestaurantDto); 
+            int id = await mediator.Send(command);  
 
             return CreatedAtAction(nameof(GetById), new { id }, null);
         }

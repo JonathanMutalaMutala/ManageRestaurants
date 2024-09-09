@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Restaurants.Domain.Exceptions;
 using Restaurants.Domain.Repositories;
 
 namespace Restaurants.Application.Restaurants.Command.DeleteRestaurant
@@ -25,7 +26,7 @@ namespace Restaurants.Application.Restaurants.Command.DeleteRestaurant
             var restaurant = await restaurantsRepository.GetByIdAsync(request.Id);
 
             if (restaurant == null)
-                return false;
+                throw new NotFoundException($"Restaurant with {request.Id} doesn't exist"); 
 
             await restaurantsRepository.Delete(restaurant);
 

@@ -56,12 +56,17 @@ namespace Restaurants.API.Controllers
         }
 
         [HttpPatch("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateRestaurant([FromRoute] int id, UpdateRestaurantCommand command)
         {
             command.Id = id;
-            await mediator.Send(command);
+           var isUpdated =  await mediator.Send(command);
 
-            return NoContent(); 
+            if (isUpdated)
+                return NoContent(); 
+
+            return NotFound(); 
         }
 
     }
